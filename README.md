@@ -4,4 +4,4 @@ A Rust library for validating configuration files.
 
 ## Updates
 
-Commit 5
+Commit 7
