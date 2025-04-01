@@ -1,20 +1,18 @@
 use std::fmt;
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub enum ValidationError {
-    SchemaError(String),
-    JsonError(String),
-    YamlError(String),
-    CustomError(String),
+    ParseError(String),
+    SchemaViolation(String),
+    Custom(String),
 }
 
 impl fmt::Display for ValidationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            ValidationError::SchemaError(msg) => write!(f, "Schema error: {}", msg),
-            ValidationError::JsonError(msg) => write!(f, "JSON error: {}", msg),
-            ValidationError::YamlError(msg) => write!(f, "YAML error: {}", msg),
-            ValidationError::CustomError(msg) => write!(f, "Custom error: {}", msg),
+            ValidationError::ParseError(msg) => write!(f, "Parse Error: {}", msg),
+            ValidationError::SchemaViolation(msg) => write!(f, "Schema Violation: {}", msg),
+            ValidationError::Custom(msg) => write!(f, "Custom Error: {}", msg),
         }
     }
 }
