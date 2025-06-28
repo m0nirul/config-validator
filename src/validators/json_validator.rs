@@ -1,9 +1,32 @@
 use serde_json::Value;
-use crate::errors::ValidationError;
 
-pub fn validate_json(config: &str) -> Result<Value, ValidationError> {
-    let parsed: Value = serde_json::from_str(config)
-        .map_err(|e| ValidationError::ParseError(format!("Failed to parse JSON: {}", e)))?;
-    // Additional validation logic can be added here
-    Ok(parsed)
+pub struct JsonValidator;
+
+impl JsonValidator {
+    pub fn new() -> Self {
+        JsonValidator
+    }
+    
+    pub fn validate(&self, value: &Value) -> Result<(), String> {
+        self.validate_type(value)?;
+        self.validate_structure(value)?;
+        self.validate_values(value)
+    }
+    
+    fn validate_type(&self, value: &Value) -> Result<(), String> {
+        if !value.is_object() {
+            return Err("Expected a JSON object".to_string());
+        }
+        Ok(())
+    }
+    
+    fn validate_structure(&self, value: &Value) -> Result<(), String> {
+        // Add structure validation logic here
+        Ok(())
+    }
+    
+    fn validate_values(&self, value: &Value) -> Result<(), String> {
+        // Add value validation logic here
+        Ok(())
+    }
 }

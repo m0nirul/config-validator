@@ -1,9 +1,5 @@
-pub struct Validator {
-    // Validator definition
-}
+pub mod json_validator;
 
-impl Validator {
-    pub fn new() -> Self {
-        Validator {}
-    }
+pub trait Validator {
+    fn validate(&self, value: &serde_json::Value) -> Result<(), String>;
 }
