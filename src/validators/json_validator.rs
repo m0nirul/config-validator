@@ -1,32 +1,29 @@
 use serde_json::Value;
+use thiserror::Error;
+use crate::errors::ValidationError;
 
-pub struct JsonValidator;
+#[derive(Debug, Error)]
+pub enum JsonValidationError {
+    #[error("Invalid JSON format")]
+    InvalidFormat,
+    #[error("JSON validation failed: {0}")]
+    ValidationFailed(String),
+}
 
-impl JsonValidator {
-    pub fn new() -> Self {
-        JsonValidator
+impl From<serde_json::Error> for JsonValidationError {
+    fn from(err: serde_json::Error) -> Self {
+        JsonValidationError::InvalidFormat
     }
-    
-    pub fn validate(&self, value: &Value) -> Result<(), String> {
-        self.validate_type(value)?;
-        self.validate_structure(value)?;
-        self.validate_values(value)
+}
+
+impl From<JsonValidationError> for ValidationError {
+    fn from(err: JsonValidationError) -> Self {
+        ValidationError::JsonValidationFailed(err.to_string())
     }
-    
-    fn validate_type(&self, value: &Value) -> Result<(), String> {
-        if !value.is_object() {
-            return Err("Expected a JSON object".to_string());
-        }
-        Ok(())
-    }
-    
-    fn validate_structure(&self, value: &Value) -> Result<(), String> {
-        // Add structure validation logic here
-        Ok(())
-    }
-    
-    fn validate_values(&self, value: &Value) -> Result<(), String> {
-        // Add value validation logic here
-        Ok(())
-    }
+}
+
+pub fn validate_json(json: &str) -> Result<Value, JsonValidationError> {
+    let parsed: Value = serde_json::from_str(json)?;
+    // Add custom validation logic here
+    Ok(parsed)
 }
