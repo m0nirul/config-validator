@@ -1,19 +1,7 @@
-# Config Validator
+# config-validator
 
-A tool to validate and lint configuration files across multiple environments, ensuring consistency and correctness.
+A tool to validate and lint configuration files across multiple environments.
 
-## Installation
+## Updates
 
-```bash
-npm install
-```
-
-## Usage
-
-```bash
-# Validate a configuration file
-npx config-validator validate path/to/config.json
-
-# Lint a configuration file
-npx config-validator lint path/to/config.json
-```
+Commit 4
