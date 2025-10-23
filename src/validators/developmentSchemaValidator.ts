@@ -1,26 +1,22 @@
-import { SchemaValidator } from './index';
+import { ISchemaValidator } from './ISchemaValidator';
 
-class DevelopmentSchemaValidator extends SchemaValidator {
-    constructor() {
-        super();
-        this.schema = {
-            type: 'object',
-            properties: {
-                apiUrl: { type: 'string' },
-                debugMode: { type: 'boolean' }
-            },
-            required: ['apiUrl', 'debugMode']
-        };
-    }
-
-    validateConfig(config: any): void {
-        this.validate(config, this.schema);
-    }
-
-    validate(config: any, schema: any): void {
-        const { errors } = this.validator.validate(config, schema);
-        if (errors.length > 0) {
-            throw new Error(JSON.stringify(errors, null, 2));
+const developmentSchemaValidator: ISchemaValidator = {
+    validate: (config) => {
+        if (!config.hasOwnProperty('apiUrl')) {
+            throw new Error('Missing required property: apiUrl');
         }
+        if (typeof config.apiUrl !== 'string') {
+            throw new Error('Invalid type for apiUrl: expected string');
+        }
+        if (!config.hasOwnProperty('debugMode')) {
+            throw new Error('Missing required property: debugMode');
+        }
+        if (typeof config.debugMode !== 'boolean') {
+            throw new Error('Invalid type for debugMode: expected boolean');
+        }
+        // Additional validation logic can be added here
+        return true;
     }
-}
+};
+
+export default developmentSchemaValidator;
