@@ -1,11 +1,6 @@
-import { ISchemaValidator } from './baseSchemaValidator';
+import { validateSchema } from '../utils/validationUtils';
+import developmentSchema from '../schemas/developmentSchema.json';
 
-class DevelopmentSchemaValidator implements ISchemaValidator {
-    validate(config: any): string[] {
-        const errors: string[] = [];
-        // Add validation logic for development environment
-        return errors;
-    }
-}
-
-export default DevelopmentSchemaValidator;
+export const validateDevelopmentConfig = (data: any): void => {
+    validateSchema(developmentSchema, data);
+};

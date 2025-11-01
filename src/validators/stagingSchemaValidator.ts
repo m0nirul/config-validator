@@ -1,11 +1,6 @@
-import { ISchemaValidator } from './baseSchemaValidator';
+import { validateSchema } from '../utils/validationUtils';
+import stagingSchema from '../schemas/stagingSchema.json';
 
-class StagingSchemaValidator implements ISchemaValidator {
-    validate(config: any): string[] {
-        const errors: string[] = [];
-        // Add validation logic for staging environment
-        return errors;
-    }
-}
-
-export default StagingSchemaValidator;
+export const validateStagingConfig = (data: any): void => {
+    validateSchema(stagingSchema, data);
+};
