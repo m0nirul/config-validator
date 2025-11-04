@@ -1,9 +1,12 @@
-import { Schema } from 'jsonschema';
+import Ajv from 'ajv';
 
-export const validateSchema = (schema: Schema, data: any): void => {
-    const validator = new Schema(schema);
-    const result = validator.validate(data, { throwAll: true });
-    if (!result.valid) {
-        throw new Error(`Validation failed: ${JSON.stringify(result.errors)}`);
+const ajv = new Ajv();
+
+export const validateSchema = (schema: any, data: any) => {
+    const validate = ajv.compile(schema);
+    const valid = validate(data);
+    if (!valid) {
+        console.error(validate.errors);
     }
+    return valid;
 };
