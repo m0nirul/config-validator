@@ -4,4 +4,4 @@ A tool to validate and lint configuration files across multiple environments.
 
 ## Updates
 
-Commit 21
+Commit 22
