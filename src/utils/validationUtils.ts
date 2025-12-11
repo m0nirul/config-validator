@@ -1,12 +1,13 @@
-import Ajv from 'ajv';
+import { Schema } from 'joi';
 
-const ajv = new Ajv();
-
-export const validateSchema = (schema: any, data: any) => {
-    const validate = ajv.compile(schema);
-    const valid = validate(data);
-    if (!valid) {
-        console.error(validate.errors);
+export const validateSchema = (schema: Schema, data: any): string | null => {
+    const { error } = schema.validate(data, { abortEarly: false });
+    if (error) {
+        return error.details.map(detail => detail.message).join('\n');
     }
-    return valid;
+    return null;
+};
+
+export const formatErrorMessage = (errors: string): string => {
+    return `Validation failed:\n${errors}`;
 };
